@@ -140,7 +140,8 @@ def funception(func1, begin):
     >>> g3(-1)   # increment(-3) * increment(-2) = -2 * -1 = 2
     2
     """
-    
+    #1. 首先确定参数，参数实际上是g1和g3这两种方程中给出的系数，但是在funception本身并无法传入
+    #2. 
 
 
 def mul_by_num(num):
