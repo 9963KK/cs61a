@@ -31,7 +31,12 @@ def product(n, term):
     >>> product(3, triple)    # 1*3 * 2*3 * 3*3
     162
     """
-
+    #1.需要一个值来记录总和，设置为total
+    total=0
+    a=1
+    for i in range(1,n+1) :
+        a*=term(i)
+    return a
 
 def accumulate(merger, start, n, term):
     """Return the result of merging the first n terms in a sequence and start.
@@ -57,7 +62,14 @@ def accumulate(merger, start, n, term):
     >>> accumulate(lambda x, y: (x + y) % 17, 19, 20, square)
     16
     """
-    "*** YOUR CODE HERE ***"
+    #1.相对于上一题来说，增加了循环中不同运算的连接方式，从单纯的乘法变为其他运算。
+    #2.其他的部分遇上题类似，只需要修改循环中的表达式即可。
+    #3.同时，有个start变量即可把a替换为start。
+    #4.循环中，每次一循环后start需要赋予新的值。
+    total=0
+    for i in range(1,n+1) :
+        start=merger(start,term(i))
+    return start
 
 
 def summation_using_accumulate(n, term):
@@ -74,7 +86,7 @@ def summation_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(summation_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    "*** YOUR CODE HERE ***"
+    
 
 
 def product_using_accumulate(n, term):
