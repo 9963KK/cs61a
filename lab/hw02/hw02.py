@@ -86,7 +86,12 @@ def summation_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(summation_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    
+    # 1. 首先，题目中已经说明了计算方式Returns the sum: term(1) + ... + term(n), using accumulat
+    # 2. 按照要求写即可
+    sum=0
+    for i in range(1,n+1):
+        sum+=term(n)
+    return sum
 
 
 def product_using_accumulate(n, term):
@@ -103,7 +108,10 @@ def product_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(product_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    "*** YOUR CODE HERE ***"
+    sum=1
+    for i in range(1,n+1):
+        sum*=term(i)
+    return sum
 
 
 def funception(func1, begin):
@@ -132,7 +140,7 @@ def funception(func1, begin):
     >>> g3(-1)   # increment(-3) * increment(-2) = -2 * -1 = 2
     2
     """
-    "*** YOUR CODE HERE ***"
+    
 
 
 def mul_by_num(num):
