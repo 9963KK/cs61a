@@ -88,10 +88,11 @@ def summation_using_accumulate(n, term):
     """
     # 1. 首先，题目中已经说明了计算方式Returns the sum: term(1) + ... + term(n), using accumulat
     # 2. 按照要求写即可
-    sum=0
-    for i in range(1,n+1):
-        sum+=term(n)
-    return sum
+    return accumulate(add, 0, n, term)
+    # sum=0
+    # for i in range(1,n+1):
+    #     sum+=term(n)
+    # return sum
 
 
 def product_using_accumulate(n, term):
@@ -108,11 +109,11 @@ def product_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(product_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    sum=1
-    for i in range(1,n+1):
-        sum*=term(i)
-    return sum
-
+    # sum=1
+    # for i in range(1,n+1):
+    #     sum*=term(i)
+    # return sum
+    return accumulate(mul,1,n,term)
 
 def funception(func1, begin):
     """ Takes in a function (func1) and a begin value.
@@ -141,9 +142,19 @@ def funception(func1, begin):
     2
     """
     #1. 首先确定参数，参数实际上是g1和g3这两种方程中给出的系数，但是在funception本身并无法传入
-    #2. 
-
-
+    #2. 此题需要通过函数中返回函数的方式来解题 return functions as return value
+    #3. 将前面学到的assert的用法融合进去
+    #4. 注意在内置函数中，若要引用parent函数的变量，需要将其赋予到新的值中，如下题
+    def out_num(end):
+        start=begin #To avoid UnBoundLocalError
+        total = 1
+        # assert start<=end,"begin must greater than end"
+        if start>end: return 1
+        for i in range(start,end):
+            total*=func1(i)
+        return total
+    return out_num
+#下面的题目考查的是关于匿名函数的知识点
 def mul_by_num(num):
     """Returns a function that takes one argument and returns num
     times that argument.
@@ -155,7 +166,12 @@ def mul_by_num(num):
     >>> y(-4)
     -8
     """
-    return ______
+    # res=0
+    # def mul_num(n):
+    #     res=num*n
+    #     return res
+    # return mul_num
+    return lambda x:num*x
 
 
 def add_results(f1, f2):
@@ -178,8 +194,10 @@ def add_results(f1, f2):
     >>> a3(4)
     44
     """
-    return ______
-
+    # def conbine_func(n):
+    #     return f1(n)+f2(n)
+    # return conbine_func
+    return lambda x:f1(x)+f2(x)
 
 def mod_maker():
     """Return a two-argument function that performs the modulo operation and
@@ -196,7 +214,14 @@ def mod_maker():
     >>> check(HW_SOURCE_FILE, 'mod_maker', ['If', 'IfExp']) # no if / if-else statements
     True
     """
-    return ______
+    #1. 此题需要使用assert来解决（bushi）
+    #2. 想不出来了，看答案
+    #3. 使用lambda表达式来解决
+    # def remainder_if(a,b):
+    #     assert a%b!=0, "True"
+    #     return a%b
+    # return remainder_if
+    return lambda x, y: x % y or True
 
 
 def lambda_math_syntax_check():
