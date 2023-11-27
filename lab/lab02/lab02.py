@@ -81,7 +81,8 @@ def count_cond(condition):
     >>> count_primes(20)   # 2, 3, 5, 7, 11, 13, 17, 19
     8
     """
-    
+    #1. 首先确定该函数需要返回两个参数，分别是n和i，
+    return 
 
 
 def multiple(a, b):
@@ -92,7 +93,7 @@ def multiple(a, b):
     >>> multiple(14, 21)
     42
     """
-    "*** YOUR CODE HERE ***"
+    
 
 
 
