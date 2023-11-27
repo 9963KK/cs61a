@@ -29,9 +29,15 @@ def composite_identity(f, g):
     >>> b1(4)                            # (4 + 1) ** 2 != 4 ** 2 + 1
     False
     """
-    if composer(f, g)==composer(g, f):
+    """
+    1. 在编写该程序时出现了“TypeError: 'bool' object is not callable”这个报错，我认为应该是：
+     if composer(f, g)==composer(g, f):
         return True
-    return False
+       这段代码中返回的值被当作一个callable函数来使用了，但实际上，他返回的是True和False whichi is not callable
+       所以需要修改代码的结构，之前认为该代码的结构是有问题的。
+    2. 在这个函数中，最重要的地方是需要计算composer函数的值是否相等，所以必须要返回的是一个函数，至于是定义函数还是匿名函数都可。
+    """
+    return lambda x: True if composer(f,g)(x)==composer(g,f)(x) else False
 
 
 def sum_digits(y):
@@ -75,7 +81,7 @@ def count_cond(condition):
     >>> count_primes(20)   # 2, 3, 5, 7, 11, 13, 17, 19
     8
     """
-    "*** YOUR CODE HERE ***"
+    
 
 
 def multiple(a, b):
