@@ -81,10 +81,17 @@ def count_cond(condition):
     >>> count_primes(20)   # 2, 3, 5, 7, 11, 13, 17, 19
     8
     """
-    #1. 首先确定该函数需要返回两个参数，分别是n和i，
-    return 
-
-
+    #1. 首先确定该函数需要返回两个参数，分别是n和i
+    #2. 要处理的是在增加一个参数后能够处理该额外参数的函数，即可以返回函数
+    #3. 可以调用condition函数来解答
+    def meet_condition(N):
+        #Set a number to counter the number of couples that can meet the condition
+        counter=0
+        for i in range(N+1):
+            if condition(N,i):
+                counter+=1
+        return counter
+    return meet_condition
 def multiple(a, b):
     """Return the smallest number n that is a multiple of both a and b.
 
