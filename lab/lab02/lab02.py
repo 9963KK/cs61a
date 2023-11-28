@@ -100,8 +100,17 @@ def multiple(a, b):
     >>> multiple(14, 21)
     42
     """
-    
-
+    #1. 此题寻找的是最小公倍数，既然a*b是一个公倍数，那么最小公倍数必须小于等于它。
+    #2. 最小公倍数multi的范围应该是[max(a,b),a*b]
+    #3. 不需要其中的每个数字都遍历，遍历max(a,b)的倍数即可
+    basic=max(a,b)
+    times=min(a,b)
+    i=1
+    while True:
+        if i==times or (basic*i)%times==0:
+            break
+        i+=1
+    return basic*i
 
 
 def cycle(f1, f2, f3):
@@ -130,5 +139,8 @@ def cycle(f1, f2, f3):
     >>> do_two_cycles(1)
     19
     """
-    "*** YOUR CODE HERE ***"
+    #1. 此题属于函数套函数的方式，首先把cycle设置a(x)函数->b(a(x))(y)->c(b(a(x))(y))(z)
+    #2. 返回值必定为函数,而且为high-order function
+    def f4(a):
+        return
 
