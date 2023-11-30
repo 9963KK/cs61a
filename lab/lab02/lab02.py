@@ -87,7 +87,7 @@ def count_cond(condition):
     def meet_condition(N):
         #Set a number to counter the number of couples that can meet the condition
         counter=0
-        for i in range(N+1):
+        for i in range(1,N+1):
             if condition(N,i):
                 counter+=1
         return counter
@@ -141,6 +141,55 @@ def cycle(f1, f2, f3):
     """
     #1. 此题属于函数套函数的方式，首先把cycle设置a(x)函数->b(a(x))(y)->c(b(a(x))(y))(z)
     #2. 返回值必定为函数,而且为high-order function
-    def f4(a):
-        return
+    #3.需要使用iteration,看进入循环的counter是否大于3然后再想递归那样处理
+    # def f4(process):
+    #     counter=process
+    #     if counter>3:
+    #         counter-=3
+    #         return f4(counter)
+    #     elif counter==0:
+    #         return lambda x:x
+    #     elif counter==1:
+    #         return lambda x:f1(x)
+    #     elif counter==2:
+    #         return lambda x:f2(x)
+    #     elif counter==3:
+    #         return lambda x:f3(x)
+    #     return
+    """
+    There are three main pieces of information we need in order to calculate the value that we want to return.
 
+The three functions that we will be cycling through, so f1, f2, f3.
+The number of function applications we need, namely n. When n is 0,
+we want our function to behave like the identity function (i.e. return the input without applying any of our three functions to it).
+The input that we start off with, namely x.
+The functions are the parameters passed into cycle.We want the return value of cycle to be a function ret_fn that takes in n and outputs another function ret.
+ret is a function that takes in x and then will cyclically apply the three passed in functions to the input until we have reached n applications. Thus, most of the logic will go inside of ret.
+
+Solution:
+
+To figure out which function we should next use in our cycle, we can use the mod operation via %, and loop through the function applications until we have made exactly n function applications to our original input x.
+    """
+    def g(n):
+        def h(x):
+            if n == 0:
+                return x
+            return cycle(f2, f3, f1)(n - 1)(f1(x))
+        return h
+    return g
+#这个地方使用将f1，f2，f3不同的顺序在递归中实现循环使用。
+
+    # def g(n):
+    #     def h(x):
+    #         i = 0
+    #         while i < n:
+    #             if i % 3 == 0:
+    #                 x = f1(x)
+    #             elif i % 3 == 1:
+    #                 x = f2(x)
+    #             else:
+    #                 x = f3(x)
+    #             i += 1
+    #         return x
+    #     return h
+    # return g
