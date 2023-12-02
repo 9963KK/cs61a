@@ -28,8 +28,13 @@ def ordered_digits(x):
     False
 
     """
-    "*** YOUR CODE HERE ***"
-
+    #1. 既然此题是要求增序，那么倒过来就是降序。
+    #2. 此时基础的数就要设为9
+    i=9
+    while i>=x%10:
+        i,x=x%10,x//10
+        if x==0: return True
+    return False
 
 def get_k_run_starter(n, k):
     """Returns the 0th digit of the kth increasing run within n.
