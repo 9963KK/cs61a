@@ -129,7 +129,18 @@ def make_repeater(func, n):
     >>> make_repeater(square, 0)(5) # Yes, it makes sense to apply the function zero times!
     5
     """
-    "*** YOUR CODE HERE ***"
+   #1. 我需要返回的是一个递归的函数
+   #2. 传入递归的次数
+   #3. 思路类似于add_three(5)->make_repeater(increment,3)(5)->func_recursive(5)->res
+   #4. 每次要递归的次数是固定的，实质上就是怎么把递归的次数传入内置函数。验证的条件是counter==0时的情况,注意再内置counter=n时，每次递归都会使counter的值重置。
+    if n==0: return lambda x:x
+    def func_recursive(x,counter=n):
+        if counter==1:
+            return func(x)
+        else:
+            counter-=1
+            return func(func_recursive(x, counter))
+    return func_recursive
 
 def composer(func1, func2):
     """Returns a function f, such that f(x) = func1(func2(x))."""
@@ -145,7 +156,7 @@ def apply_twice(func):
     >>> apply_twice(square)(2)
     16
     """
-    "*** YOUR CODE HERE ***"
+    return lambda x: composer(func,func)
 
 
 def div_by_primes_under(n):
@@ -194,3 +205,5 @@ def div_by_primes_under_no_lambda(n):
 
 # Test session
 # get_k_run_starter(123444345, 3)
+# add_three = make_repeater(increment, 3)
+# add_three(5)
