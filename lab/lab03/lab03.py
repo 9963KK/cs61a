@@ -55,14 +55,21 @@ def get_k_run_starter(n, k):
     >>> get_k_run_starter(1234234534564567, 2)
     2
     """
+    #1. 此题首先需要确定有几个增长序列在n中。
+    #2.提取出增长序列，假设有a个不同的序列，对这些序列进行排序，按照顺序来。
+    #3.题目中限制了几个变量的使用。
+    #4. 考虑k=0的情况，同时考虑中间数字相同时也需要截断。在遍历到最后一个数字时，会出现0的情况，需要避免
     i = 0
     final = None
-    while ____________________________:
-        while ____________________________:
-            ____________________________
-        final = ____________________________
-        i = ____________________________
-        n = ____________________________
+    while i<=k:
+        while True:
+            temp=n%10
+            n=n//10
+            if temp<=n%10 or n%10==0:
+                break
+        final = temp
+        i = i+1
+        n = n
     return final
 
 
@@ -86,7 +93,24 @@ def nearest_two(x):
 
     """
     power_of_two = 1.0
-    "*** YOUR CODE HERE ***"
+    #1. 首先确定要选的幂次方是多少，可以设置一个数val，当pow(2,val)>x时，即可以将其纳入考虑范围。
+    #2. 分别的对val和val-1进行测试
+    #3. 对于小于1的数，需要特殊处理,从负次幂的角度来计算。
+    val=0
+    if x<1 and x>0:
+        while pow(2,val)>x:
+            val=val-1
+        if abs(pow(2,val)-x)<abs(pow(2,val+1)-x):
+            power_of_two=pow(2,val)
+        else:
+            power_of_two = pow(2, val+1)
+    elif x>=1:
+        while pow(2,val)<x:
+            val=val+1
+        if abs(pow(2,val)-x)<abs(pow(2,val-1)-x):
+            power_of_two=pow(2,val)
+        else: power_of_two=pow(2,val-1)
+    else: power_of_two=None
     return power_of_two
 
 
@@ -167,3 +191,6 @@ def div_by_primes_under_no_lambda(n):
         i = ____________________________
     return ____________________________
 
+
+# Test session
+# get_k_run_starter(123444345, 3)
