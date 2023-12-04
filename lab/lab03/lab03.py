@@ -133,14 +133,21 @@ def make_repeater(func, n):
    #2. 传入递归的次数
    #3. 思路类似于add_three(5)->make_repeater(increment,3)(5)->func_recursive(5)->res
    #4. 每次要递归的次数是固定的，实质上就是怎么把递归的次数传入内置函数。验证的条件是counter==0时的情况,注意再内置counter=n时，每次递归都会使counter的值重置。
-    if n==0: return lambda x:x
-    def func_recursive(x,counter=n):
-        if counter==1:
-            return func(x)
-        else:
-            counter-=1
-            return func(func_recursive(x, counter))
-    return func_recursive
+    # if n==0: return lambda x:x
+    # def func_recursive(x,counter=n):
+    #     if counter==1:
+    #         return func(x)
+    #     else:
+    #         counter-=1
+    #         return func(func_recursive(x, counter))
+    # return func_recursive
+    # 没必要使用递归，直接循环也是ok的。
+    def inner_func(x):
+        k = 0
+        while k < n:
+            x, k = func(x), k + 1
+        return x
+    return inner_func
 
 def composer(func1, func2):
     """Returns a function f, such that f(x) = func1(func2(x))."""
@@ -170,13 +177,17 @@ def div_by_primes_under(n):
     >>> div_by_primes_under(5)(1)
     False
     """
-    checker = lambda x: False
-    i = ____________________________
-    while ____________________________:
+    #1. 此题是判断2～n中有没有能被k整除的因数。
+    #2. 此题肯定用到了循环这个方法。
+    #3. 遍历2～n中的数字来判断if k is divisible
+    #4. 其中，使用匿名函数时，注意两个条件：1️⃣只要满足x%i==0和f(x)=True其中之一的条件就可以返回True。2️⃣只有遍历到最后一个时才会同时满足两个都为False的条件。
+    checker=lambda x: False
+    i = 2
+    while i <= n:
         if not checker(i):
-            checker = ____________________________
-        i = ____________________________
-    return ____________________________
+            checker = (lambda f, i: lambda x: x % i == 0 or f(x))(checker, i)
+        i = i + 1
+    return checker
 
 def div_by_primes_under_no_lambda(n):
     """
@@ -191,19 +202,18 @@ def div_by_primes_under_no_lambda(n):
     """
     def checker(x):
         return False
-    i = ____________________________
-    while ____________________________:
+    i = 2
+    while i<=n:
         if not checker(i):
-            def outer(____________________________):
-                def inner(____________________________):
-                    return ____________________________
-                return ____________________________
-            checker = ____________________________
-        i = ____________________________
-    return ____________________________
+            def outer(func,i):
+                def inner(x):
+                    return x%i==0 or func(i)
+                return inner
+            checker = outer(checker, i)
+        i = i+1
+    return checker
 
 
 # Test session
 # get_k_run_starter(123444345, 3)
-# add_three = make_repeater(increment, 3)
-# add_three(5)
+# add
