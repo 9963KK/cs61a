@@ -188,7 +188,15 @@ def div_by_primes_under(n):
             checker = (lambda f, i: lambda x: x % i == 0 or f(x))(checker, i)
         i = i + 1
     return checker
-
+"""
+这个题目的理解方式比较特别：
+1. 最上面的check(x): return False 是为了保证每一次在对新的i进行x%i操作时，前面的数字没有满足prime条件的。
+2. 中间的outer和inner函数，对于每一个不同的i值，都会有对应的outer和inner函数被创造出来。
+checker=outer(checker,i)->inner->i=i+1->inner(i+1)->(i+1)%i or checker(i)->inner(i)->inner(i-1)...checker(x): return False
+3. 在使用inner函数中 return x%i==0 or func(i) 语句时，前面的是为了确定当前的数字满不满足条件，第二个是为了确定以前的数字满不满足条件。
+4. 由于本题限定了必须使用high-order function的写法，不然其实用循环会更简单。但实际上，这题就是希望用high-order function来实现循环的效果，不过写出来的东西很抽象。
+5. 推荐使用pythontutor来看一下这个函数的运行过程。https://pythontutor.com/
+"""
 def div_by_primes_under_no_lambda(n):
     """
     >>> div_by_primes_under_no_lambda(10)(11)
