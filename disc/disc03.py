@@ -45,15 +45,12 @@ def hailstone(n):
     #2. 最后需要输出总共多少个时，直接+1即可。
     if n==1:
         print(n)
-        return n
+        return 1
     elif n%2==0:
-        print(n)
-        n=n//2
-        return hailstone(n)+1
+        return hailstone(n//2)+1
     else:
         print(n)
-        n=n*3+1
-        return hailstone(n)+1
+        return hailstone(n*3+1)+1
 
 
 def merge(n1, n2):
@@ -65,5 +62,36 @@ def merge(n1, n2):
     >>> merge (21, 31)
     3211
     """
-    if n1==0 and n2==0: return None
-    return None
+    #1. 在内部定义一个递归函数，对于n1和n2分别起效即可。
+    #2. 最后在结束时对二者所得到的list进行排序输出即可。
+    #3. 内部子函数有个问题，NoneType没法传出来,即append传出来的是None，
+    # def split(n):
+    #     if n==0:
+    #         n_list=[]
+    #         return n_list
+    #     else:
+    #         temp=n%10
+    #         n//=10
+    #     return split(n)+[temp]
+    # n1_list,n2_list=split(n1),split(n2)
+    # n_list=n1_list+n2_list
+    # n_list.sort(reverse=True)
+    # res=''.join(str(x) for x in n_list)
+    # return int(res)
+    if n1 == 0:
+        return n2
+    elif n2 == 0:
+        return n1
+    elif n1 % 10 < n2 % 10:
+        return merge(n1 // 10, n2) * 10 + n1 % 10
+    else:
+        return merge(n1, n2 // 10) * 10 + n2 % 10
+
+# def split(n):
+#     if n == 0:
+#         n_list = []
+#         return n_list
+#     else:
+#         temp = n % 10
+#         n //= 10
+#     return split(n).append(temp)
