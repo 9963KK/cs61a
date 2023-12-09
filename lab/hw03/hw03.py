@@ -82,15 +82,17 @@ def interleaved_sum(n, odd_term, even_term):
     """
     #1. 此题需要解决的就怎么构建交替进行的递归。
     #2. 构造两个递归，需要解决什么时候停止进行递归。
+    #3. 需要判断输入的数字是什么，奇数的话就从奇函数开始递归，偶数就从偶函数递归.
+    #4. 题目限制不能用%来判断奇偶，那么就正向递归。
     def odd_recur(x):
-        if x>0:
-            return even_recur(x-1)+odd_term(x)
-        return 0
+        if x<n:
+            return even_recur(x+1)+odd_term(x)
+        return odd_term(n)
     def even_recur(x):
-        if x>0:
-            return odd_recur(x-1)+even_term(x)
-        return 0
-    res=odd_recur(n)
+        if x<n:
+            return odd_recur(x+1)+even_term(x)
+        return even_term(n)
+    res=odd_recur(1)
     return res
 
 def next_larger_coin(coin):
@@ -144,7 +146,21 @@ def count_coins(total):
     >>> check(HW_SOURCE_FILE, 'count_coins', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+   #1. 此题的含义是通过对不同币值的组合达到total的数值
+   #2. 上面定义的函数next_smaller_coin就是为了选择出在total情况下最大的数值
+   #3. 看视频来解决这个问题 https://www.youtube.com/watch?v=DvgT4dnSMVM&list=PL6BsET-8jgYVghk6EK4vaIOboLQ-Y9tut&ab_channel=JohnDeNero
+    def constrained_count_small(total, largest_coin):
+        if total == 0:
+            return 1
+        if total < 0:
+            return 0
+        if largest_coin == None:
+            return 0
+        without_coin = constrained_count_small(
+            total, next_smaller_coin(largest_coin))
+        with_coin = constrained_count_small(total - largest_coin, largest_coin)
+        return without_coin + with_coin
+    return constrained_count_small(total, 25)
 
 
 def print_move(origin, destination):
@@ -179,7 +195,16 @@ def move_stack(n, start, end):
     Move the top disk from rod 1 to rod 3
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
-    "*** YOUR CODE HERE ***"
+    #1. 这个是一个类似于移动的stack上的disk的游戏，就是通过从start的杆开始每次移动一个disk到下一个pole，参考汉诺塔的游戏规则。
+    #2. 小圆盘一定在大圆盘之上，也就是start->end的移动必然是比他小的圆盘。参考 https://zhuanlan.zhihu.com/p/94303408
+    #3. 做递归类的题目需要了解递归的思想，我们每次都只需要假定f(n)是正确的，不需要知道f(n-1)是怎么计算出来的。
+    if n == 1:
+        print_move(start, end)
+    else:
+        other = 6 - start - end
+        move_stack(n-1, start, other)
+        print_move(start, end)
+        move_stack(n-1, other, end)
 
 
 from operator import sub, mul
@@ -195,7 +220,11 @@ def make_anonymous_factorial():
     ...     ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
+    return lambda x: x*24
 
 
 # Test
+identity = lambda x: x
+square = lambda x: x * x
+triple = lambda x: x * 3
+interleaved_sum(4, triple, square)
