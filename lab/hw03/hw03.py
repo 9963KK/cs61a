@@ -24,7 +24,11 @@ def num_eights(n):
     ...       ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr', 'For', 'While'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if n==0:
+        return n
+    elif n%10==8:
+        return num_eights(n//10)+1
+    else : return num_eights(n//10)
 
 
 def digit_distance(n):
@@ -46,7 +50,15 @@ def digit_distance(n):
     ...       ['For', 'While'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    #1. 此题使用recursive的方法，
+    #2. 除了最后一个和第一个数字外，每个数字都被用了两次。
+    #3. 对于每个选到的数字，直接减去下一位即可。
+    #4. 实质上这个计算公式是abs(n%10-(n//10)%10)
+    #5. 注意判断推出递归的条件，当数字内部含有0时，需要注意排除这种特殊情况
+    if n>10:
+        temp=abs(n%10-(n//10)%10)
+        return digit_distance(n//10)+temp
+    return 0
 
 
 def interleaved_sum(n, odd_term, even_term):
@@ -68,8 +80,18 @@ def interleaved_sum(n, odd_term, even_term):
     >>> check(HW_SOURCE_FILE, 'interleaved_sum', ['While', 'For', 'Mod']) # ban loops and %
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    #1. 此题需要解决的就怎么构建交替进行的递归。
+    #2. 构造两个递归，需要解决什么时候停止进行递归。
+    def odd_recur(x):
+        if x>0:
+            return even_recur(x-1)+odd_term(x)
+        return 0
+    def even_recur(x):
+        if x>0:
+            return odd_recur(x-1)+even_term(x)
+        return 0
+    res=odd_recur(n)
+    return res
 
 def next_larger_coin(coin):
     """Returns the next larger coin in order.
@@ -175,3 +197,5 @@ def make_anonymous_factorial():
     """
     return 'YOUR_EXPRESSION_HERE'
 
+
+# Test
