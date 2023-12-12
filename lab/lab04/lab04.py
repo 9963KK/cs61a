@@ -99,17 +99,13 @@ def double_eights(n):
     >>> check(LAB_SOURCE_FILE, 'double_eights', ['While', 'For'])
     True
     """
-    counter=0
-    eight_list=[]
-    while n>0:
-        eight_list.append(n%10)
-        n//=10
-    for i in eight_list:
-        if i==8: counter+=1
-        elif counter==2 : return True
-        elif counter>0 : counter-=1
-    return False
-
+    def check_eight(num,val):
+        if val==2: return True
+        elif num%10==8: val+=1
+        elif val>0: val-=1
+        elif num==0: return False
+        return check_eight(num//10,val)
+    return check_eight(n,0)
 
 def merge(lst1, lst2):
     """Merges two sorted lists.
@@ -135,10 +131,26 @@ def merge(lst1, lst2):
     >>> check(LAB_SOURCE_FILE, 'merge', ['While', 'For'])
     True
     """
-    total_list=lst1+lst2
-    for i in total_list:
-        
+    # Recursive Solution
+    if not lst1 or not lst2:
+        return lst1 + lst2
+    elif lst1[0] < lst2[0]:
+        return [lst1[0]] + merge(lst1[1:], lst2)
+    else:
+        return [lst2[0]] + merge(lst1, lst2[1:])
 
+    # Alternative Recursive Solution
+    if not lst1 or not lst2:
+        return lst1 + lst2
+    elif lst1[0] <= lst2[0]:
+        return [lst1[0]] + merge(lst1[1:], lst2)
+    else:
+        return merge(lst2, lst1)
+    # For the last line, instead of concatenating [lst2[0]] at the front like we did for the first solution,
+    # we instead call merge again with the arguments switched, so that in the next call to merge, lst1
+    # is now lst2, and lst2 is lst1.
+    # Note that in order for this to work successfully, we have to modify the elif case to have <= rather
+    # than just <, otherwise we run into infinite recursion. (Try out the last doctest to see why)
 def summation(n, term):
     """Return the sum of numbers 1 through n (including n) wíth term applied to each number.
     Implement using recursion!
@@ -157,7 +169,9 @@ def summation(n, term):
     True
     """
     assert n >= 1
-    "*** YOUR CODE HERE ***"
+    if n==1: return term(1)
+    temp=term(n)
+    return summation(n-1,term)+temp
 
 
 def count_palindromes(L):
@@ -167,8 +181,8 @@ def count_palindromes(L):
     >>> count_palindromes(("Acme", "Madam", "Pivot", "Pip"))
     2
     """
-    return ______
+    return len(list(filter(lambda s: s.lower() == s[::-1].lower(), L)))
 
 
 # Test
-double_eights(1288)
+# double_eights(1288)
