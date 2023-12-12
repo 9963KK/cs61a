@@ -13,7 +13,9 @@ def my_map(fn, seq):
     2023
     [None, None, None]
     """
-    return ______
+    #1. 此题理解为如何将每个在list的元素进行fn的运算
+    #2. 可以利用for的特性，首先用[]来保证得到的是一个list，然后就是一种特殊的写法。
+    return [fn(x) for x in seq]
 
 def my_filter(pred, seq):
     """Keeps elements in seq only if they satisfy pred.
@@ -31,7 +33,8 @@ def my_filter(pred, seq):
     >>> my_filter(lambda x: max(5, x) == 5, [1, 2, 3, 4, 5, 6, 7])
     [1, 2, 3, 4, 5]
     """
-    return ______
+    #1. 此题使用的的方法和上题相似，都是使用一个特殊的表达式，不过此题中使用的是判断的特殊表达式。
+    return [ i for i in seq if pred(i) ]
 
 def my_reduce(combiner, seq):
     """Combines elements in seq using combiner.
@@ -45,7 +48,14 @@ def my_reduce(combiner, seq):
     >>> my_reduce(lambda x, y: x + 2 * y, [1, 2, 3]) # (1 + 2 * 2) + 2 * 3
     11
     """
-    "*** YOUR CODE HERE ***"
+    #1. 此题是把combiner的表达式用到list的每个element上面
+    #2. 这当中，每个元素只会被使用一次可以理解为a,b,c,d四个元素，得到的表达式为combiner(a,b)->combiner(combiner(a,b),c)->……
+    res=seq[0]
+    if len(seq)==1: res=seq[0]
+    else :
+        for i in range(1,len(seq)):
+            res=combiner(res,seq[i])
+    return res
 
 def my_map_syntax_check():
     """Check that your two_of_three code consists of nothing but a return statement.
@@ -89,7 +99,16 @@ def double_eights(n):
     >>> check(LAB_SOURCE_FILE, 'double_eights', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    counter=0
+    eight_list=[]
+    while n>0:
+        eight_list.append(n%10)
+        n//=10
+    for i in eight_list:
+        if i==8: counter+=1
+        elif counter==2 : return True
+        elif counter>0 : counter-=1
+    return False
 
 
 def merge(lst1, lst2):
@@ -116,8 +135,9 @@ def merge(lst1, lst2):
     >>> check(LAB_SOURCE_FILE, 'merge', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    total_list=lst1+lst2
+    for i in total_list:
+        
 
 def summation(n, term):
     """Return the sum of numbers 1 through n (including n) wíth term applied to each number.
@@ -149,3 +169,6 @@ def count_palindromes(L):
     """
     return ______
 
+
+# Test
+double_eights(1288)
