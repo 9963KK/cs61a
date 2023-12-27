@@ -1,5 +1,5 @@
 def berry_finder(t):
-    """Returns True if t contains a node with the value 'berry' and 
+    """Returns True if t contains a node with the value 'berry' and
     False otherwise.
 
     >>> scrat = tree('berry')
@@ -15,8 +15,15 @@ def berry_finder(t):
     >>> berry_finder(t)
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    #1. 此题的思路就是利用recursive来做
+    #2. 判断是否符合条件即可。注意需要调用label和branches函数来解题。
+    #3. 在第一个判断结束后需要再判断是否还有子树才能决定是否返回值。
+    #4. 出现一个问题，就是branches返回空值，
+    res=False
+    if is_leaf(t): res = 'berry' in label(t)
+    if is_tree(t):
+        berry_finder(branches(t))
+    return res
 
 def replace_loki_at_leaf(t, lokis_replacement):
     """Returns a new tree where every leaf value equal to "loki" has
@@ -289,3 +296,6 @@ def change_abstraction(change):
 
 change_abstraction.changed = False
 
+#Test
+sproul = tree('roots', [tree('branch1', [tree('leaf'), tree('berry')]), tree('branch2')])
+berry_finder(tree(sproul))
