@@ -18,12 +18,15 @@ def berry_finder(t):
     #1. 此题的思路就是利用recursive来做
     #2. 判断是否符合条件即可。注意需要调用label和branches函数来解题。
     #3. 在第一个判断结束后需要再判断是否还有子树才能决定是否返回值。
-    #4. 出现一个问题，就是branches返回空值，
-    res=False
-    if is_leaf(t): res = 'berry' in label(t)
-    if is_tree(t):
-        berry_finder(branches(t))
-    return res
+    #4. 出现一个问题，就是branches返回空值，在传入后会出现一个多的bracket。
+    #5. 如果只是单独的用branches函数会有一个问题，就是只会遍历到branch1
+    #6. 摈弃分为leaf和branche的区别，直接当作label和branch
+    if label(t)=='berry': return True
+    for b in branches(t):
+        if berry_finder(b):
+            return True
+    return False
+
 
 def replace_loki_at_leaf(t, lokis_replacement):
     """Returns a new tree where every leaf value equal to "loki" has
@@ -54,7 +57,7 @@ def replace_loki_at_leaf(t, lokis_replacement):
     >>> laerad == yggdrasil # Make sure original tree is unmodified
     True
     """
-    "*** YOUR CODE HERE ***"
+    #1. 题目要求传入的t不做改变，那么说明在其中需要copy一个tree来作为更改的模版。
 
 
 
@@ -298,4 +301,4 @@ change_abstraction.changed = False
 
 #Test
 sproul = tree('roots', [tree('branch1', [tree('leaf'), tree('berry')]), tree('branch2')])
-berry_finder(tree(sproul))
+berry_finder(sproul)
